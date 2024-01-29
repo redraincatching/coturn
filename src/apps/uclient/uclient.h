@@ -103,7 +103,7 @@ int send_buffer(app_ur_conn_info *clnet_info, stun_buffer *message, int data_con
 int recv_buffer(app_ur_conn_info *clnet_info, stun_buffer *message, int sync, int data_connection,
                 app_tcp_conn_info *atc, stun_buffer *request_message);
 
-void client_input_handler(evutil_socket_t fd, bool what, void *arg);
+void client_input_handler(evutil_socket_t fd, int what, void *arg);
 
 turn_credential_type get_turn_credentials_type(void);
 
