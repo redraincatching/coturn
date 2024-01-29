@@ -612,7 +612,7 @@ recv_again:
   return rc;
 }
 
-static int client_read(app_ur_session *elem, int is_tcp_data, app_tcp_conn_info *atc) {
+static int client_read(app_ur_session *elem, bool is_tcp_data, app_tcp_conn_info *atc) {
 
   if (!elem)
     return -1;
@@ -903,7 +903,7 @@ static int client_write(app_ur_session *elem) {
   return 0;
 }
 
-void client_input_handler(evutil_socket_t fd, int what, void *arg) {
+void client_input_handler(evutil_socket_t fd, bool what, void *arg) {
 
   if (!(what & EV_READ) || !arg)
     return;
@@ -1645,4 +1645,3 @@ SOCKET_TYPE get_socket_type(void) {
   }
 }
 ///////////////////////////////////////////
-/*

@@ -48,22 +48,22 @@
 /////////////// extern definitions /////////////////////
 
 int clmessage_length = 100;
-int do_not_use_channel = 0;
-int c2c = 0;
-int clnet_verbose = TURN_VERBOSE_NONE;
-int use_tcp = 0;
-int use_sctp = 0;
-int use_secure = 0;
-int hang_on = 0;
+bool do_not_use_channel = false;
+bool c2c = false;
+bool clnet_verbose = TURN_VERBOSE_NONE;
+bool use_tcp = false;
+bool use_sctp = false;
+bool use_secure = false;
+bool hang_on = false;
 ioa_addr peer_addr;
-int no_rtcp = 0;
+bool no_rtcp = false;
 int default_address_family = STUN_ATTRIBUTE_REQUESTED_ADDRESS_FAMILY_VALUE_DEFAULT;
-int dont_fragment = 0;
+bool dont_fragment = false;
 uint8_t g_uname[STUN_MAX_USERNAME_SIZE + 1];
 password_t g_upwd;
 char g_auth_secret[1025] = "\0";
-int g_use_auth_secret_with_timestamp = 0;
-int use_fingerprints = 1;
+bool g_use_auth_secret_with_timestamp = false;
+bool use_fingerprints = true;
 
 static char ca_cert_file[1025] = "";
 static char cipher_suite[1025] = "";
@@ -74,26 +74,26 @@ int root_tls_ctx_num = 0;
 
 uint8_t relay_transport = STUN_ATTRIBUTE_TRANSPORT_UDP_VALUE;
 unsigned char client_ifname[1025] = "";
-int passive_tcp = 0;
-int mandatory_channel_padding = 0;
-int negative_test = 0;
-int negative_protocol_test = 0;
-int dos = 0;
-int random_disconnect = 0;
+bool passive_tcp = false;
+bool mandatory_channel_padding = false;
+bool negative_test = false;
+bool negative_protocol_test = false;
+bool dos = false;
+bool random_disconnect = false;
 
 SHATYPE shatype = SHATYPE_DEFAULT;
 
-int mobility = 0;
+bool mobility = false;
 
-int no_permissions = 0;
+bool no_permissions = false;
 
-int extra_requests = 0;
+bool extra_requests = false;
 
 char origin[STUN_MAX_ORIGIN_SIZE + 1] = "\0";
 
 band_limit_t bps = 0;
 
-int dual_allocation = 0;
+bool dual_allocation = false;
 
 int oauth = 0;
 oauth_key okey_array[3];
