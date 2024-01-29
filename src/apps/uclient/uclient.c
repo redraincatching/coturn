@@ -40,11 +40,11 @@
 #endif
 #include <time.h>
 
-static int verbose_packets = 0;
+static bool verbose_packets = 0;
 
 static size_t current_clients_number = 0;
 
-static int start_full_timer = 0;
+static bool start_full_timer = 0;
 static uint32_t tot_messages = 0;
 static uint32_t tot_send_messages = 0;
 static uint64_t tot_send_bytes = 0;
@@ -84,7 +84,7 @@ static uint64_t max_latency = 0;
 static uint64_t min_jitter = 0xFFFFFFFF;
 static uint64_t max_jitter = 0;
 
-static int show_statistics = 0;
+static bool show_statistics = 0;
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -104,6 +104,7 @@ static void __turn_getMSTime(void) {
   current_mstime = (uint64_t)((current_time * 1000) + (tp.tv_nsec / 1000000));
 }
 
+////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 
 static int refresh_channel(app_ur_session *elem, uint16_t method, uint32_t lt);
@@ -216,7 +217,7 @@ int send_buffer(app_ur_conn_info *clnet_info, stun_buffer *message, int data_con
 
   if (ssl) {
 
-    int message_sent = 0;
+    bool message_sent = 0;
     while (!message_sent) {
 
       if (SSL_get_shutdown(ssl)) {
@@ -902,7 +903,7 @@ static int client_write(app_ur_session *elem) {
   return 0;
 }
 
-void client_input_handler(evutil_socket_t fd, short what, void *arg) {
+void client_input_handler(evutil_socket_t fd, int what, void *arg) {
 
   if (!(what & EV_READ) || !arg)
     return;
@@ -1582,7 +1583,7 @@ int add_integrity(app_ur_conn_info *clnet_info, stun_buffer *message) {
       // self-test:
       {
         password_t pwd;
-        if (stun_check_message_integrity_by_key_str(get_turn_credentials_type(), message->buf, (size_t)(message->len),
+		if (stun_check_message_integrity_by_key_str(get_turn_credentials_type(), message->buf, (size_t)(message->len),
                                                     clnet_info->key, pwd, shatype) < 1) {
           TURN_LOG_FUNC(TURN_LOG_LEVEL_ERROR, " Self-test of integrity does not comple correctly !\n");
           return -1;
@@ -1644,3 +1645,4 @@ SOCKET_TYPE get_socket_type(void) {
   }
 }
 ///////////////////////////////////////////
+/*
