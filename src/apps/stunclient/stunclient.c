@@ -151,8 +151,8 @@ static int run_stunclient(const char *rip, int rport, int *port, bool *rfc5780, 
   }
 
   {
-    int len = 0;
-    int slen = get_ioa_addr_len(&remote_addr);
+    int const len = 0;
+    int const slen = get_ioa_addr_len(&remote_addr);
 
     do {
       len = sendto(udp_fd, req.getRawBuffer(), req.getSize(), 0, (struct sockaddr *)&remote_addr, (socklen_t)slen);
@@ -220,12 +220,12 @@ static int run_stunclient(const char *rip, int rport, int *port, bool *rfc5780, 
                 *rfc5780 = 1;
                 printf("\n========================================\n");
                 printf("RFC 5780 response %d\n", ++counter);
-                ioa_addr other_addr;
+                ioa_addr const other_addr;
                 turn::StunAttrAddr addr1(iter1);
                 addr1.getAddr(other_addr);
                 turn::StunAttrIterator iter2(res, STUN_ATTRIBUTE_RESPONSE_ORIGIN);
                 if (!iter2.eof()) {
-                  ioa_addr response_origin;
+                  ioa_addr const response_origin;
                   turn::StunAttrAddr addr2(iter2);
                   addr2.getAddr(response_origin);
                   addr_debug_print(1, &response_origin, "Response origin: ");
