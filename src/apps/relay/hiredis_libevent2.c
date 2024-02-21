@@ -53,8 +53,7 @@ struct redisLibeventEvents {
   struct event *rev, *wev;
   int rev_set, wev_set;
   char *ip;
-  int port;
-  char *user;
+  uint16_t port;
   char *pwd;
   int db;
 };
@@ -217,7 +216,10 @@ void send_message_to_redis(redis_context_handle rch, const char *command, const 
 
 ///////////////////////// Attach /////////////////////////////////
 
-redis_context_handle redisLibeventAttach(struct event_base *base, char *ip0, int port0, char *user, char *pwd, int db) {
+redis_context_handle redisLibeventAttach(struct event_base *base, char *ip0, uint16_t port0, char *pwd, int db) {
+
+  struct redisLibeventEvents *e = NULL;
+  redisAsyncContext *ac = NULL;
 
   char ip[256];
   if (ip0 && ip0[0]) {
@@ -226,7 +228,7 @@ redis_context_handle redisLibeventAttach(struct event_base *base, char *ip0, int
     strncpy(ip, "127.0.0.1", sizeof(ip));
   }
 
-  int port = DEFAULT_REDIS_PORT;
+  uint16_t port = DEFAULT_REDIS_PORT;
   if (port0 > 0) {
     port = port0;
   }
