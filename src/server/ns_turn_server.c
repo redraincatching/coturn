@@ -4522,9 +4522,10 @@ static int read_client_connection(turn_turnserver *server, ts_ur_super_session *
     FUNCEND;
     return 0;
 
+  // have to change this (but it's going to be weird)
   } else if (stun_is_command_message_full_check_str(ioa_network_buffer_data(in_buffer->nbh),
-                                                    ioa_network_buffer_get_size(in_buffer->nbh), 0,
-                                                    &(ss->enforce_fingerprints))) {
+                                                    ioa_network_buffer_get_size(in_buffer->nbh), false,
+                                                    &((bool) ss->enforce_fingerprints))) {
 
     ioa_network_buffer_handle nbh = ioa_network_buffer_allocate(server->e);
     int resp_constructed = 0;

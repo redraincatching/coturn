@@ -241,7 +241,7 @@ int main(int argc, const char **argv) {
 
     { // fingerprintfs etc
 
-      res = stun_is_command_message_full_check_str(buf, sizeof(reqstc) - 1, 1, NULL);
+      res = (int) stun_is_command_message_full_check_str(buf, sizeof(reqstc) - 1, true, NULL);
       printf("RFC 5769 message fingerprint test(0) result: ");
 
       if (res) {
@@ -276,7 +276,7 @@ int main(int argc, const char **argv) {
     { // negative fingerprint
       buf[27] = 23;
 
-      res = stun_is_command_message_full_check_str(buf, sizeof(reqstc) - 1, 1, NULL);
+      res = (int) stun_is_command_message_full_check_str(buf, sizeof(reqstc) - 1, true, NULL);
       printf("RFC 5769 NEGATIVE fingerprint test(0) result: ");
 
       if (!res) {
@@ -410,7 +410,7 @@ int main(int argc, const char **argv) {
 
     { // fingerprintfs etc
 
-      res = stun_is_command_message_full_check_str(buf, sizeof(respv4) - 1, 1, NULL);
+      res = (int) stun_is_command_message_full_check_str(buf, sizeof(respv4) - 1, true, NULL);
       printf("RFC 5769 message fingerprint test(1) result: ");
 
       if (res) {
@@ -445,7 +445,7 @@ int main(int argc, const char **argv) {
     { // negative fingerprint
       buf[27] = 23;
 
-      res = stun_is_command_message_full_check_str(buf, sizeof(respv4) - 1, 1, NULL);
+      res = (int) stun_is_command_message_full_check_str(buf, sizeof(respv4) - 1, true, NULL);
       printf("RFC 5769 NEGATIVE fingerprint test(1) result: ");
 
       if (!res) {
@@ -499,7 +499,7 @@ int main(int argc, const char **argv) {
     { // decoding test
       memcpy(buf, respv6, sizeof(respv6));
 
-      res = stun_is_command_message_full_check_str(buf, sizeof(respv6) - 1, 1, NULL);
+      res = (int) stun_is_command_message_full_check_str(buf, sizeof(respv6) - 1, true, NULL);
       printf("RFC 5769 message fingerprint test(2) result: ");
 
       if (res) {
@@ -534,7 +534,7 @@ int main(int argc, const char **argv) {
     { // negative decoding test
       buf[27] = 23;
 
-      res = stun_is_command_message_full_check_str(buf, sizeof(respv6) - 1, 1, NULL);
+      res = (int) stun_is_command_message_full_check_str(buf, sizeof(respv6) - 1, true, NULL);
       printf("RFC 5769 NEGATIVE fingerprint test(2) result: ");
 
       if (!res) {
