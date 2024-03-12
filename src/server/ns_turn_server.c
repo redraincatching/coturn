@@ -4486,6 +4486,8 @@ static int read_client_connection(turn_turnserver *server, ts_ur_super_session *
   SOCKET_APP_TYPE sat = get_ioa_socket_app_type(ss->client_socket);
   int is_padding_mandatory = is_stream_socket(st);
 
+  bool ss_enforce_fingerprints = (bool) ss->enforce_fingerprints;
+
   if (sat == HTTP_CLIENT_SOCKET) {
 
     if (server->verbose) {
@@ -4523,8 +4525,8 @@ static int read_client_connection(turn_turnserver *server, ts_ur_super_session *
     return 0;
 
   } else if (stun_is_command_message_full_check_str(ioa_network_buffer_data(in_buffer->nbh),
-                                                    ioa_network_buffer_get_size(in_buffer->nbh), 0,
-                                                    &(ss->enforce_fingerprints))) {
+                                                    ioa_network_buffer_get_size(in_buffer->nbh), false,
+                                                    &ss_enforce_fingerprints)) {
 
     ioa_network_buffer_handle nbh = ioa_network_buffer_allocate(server->e);
     int resp_constructed = 0;

@@ -18,7 +18,7 @@ extern int LLVMFuzzerTestOneInput(const uint8_t *Data,
     return 1;
   }
 
-  stun_is_command_message_full_check_str((uint8_t *)Data, Size, 1, NULL);
+  stun_is_command_message_full_check_str((uint8_t *)Data, Size, true, NULL);
 
   uint8_t uname[33];
   uint8_t realm[33];
