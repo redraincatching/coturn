@@ -1096,7 +1096,7 @@ static int handle_turn_allocate(turn_turnserver *server, ts_ur_super_session *ss
               *err_code = 442;
               *reason = (const uint8_t *)"UDP Transport is not allowed by the TURN Server configuration";
             } else if (ss->client_socket) {
-              SOCKET_TYPE const cst = get_ioa_socket_type(ss->client_socket);
+              const SOCKET_TYPE cst = get_ioa_socket_type(ss->client_socket);
               if ((transport == STUN_ATTRIBUTE_TRANSPORT_TCP_VALUE) && !is_stream_socket(cst)) {
                 *err_code = 400;
                 *reason = (const uint8_t *)"Wrong Transport Data";
@@ -2743,7 +2743,7 @@ static int handle_turn_binding(turn_turnserver *server, ts_ur_super_session *ss,
   int padding = 0;
   int response_port_present = 0;
   uint16_t response_port = 0;
-  SOCKET_TYPE const st = get_ioa_socket_type(ss->client_socket);
+  const SOCKET_TYPE  st = get_ioa_socket_type(ss->client_socket);
   int use_reflected_from = 0;
 
   if (!(ss->client_socket)) {
@@ -3578,7 +3578,7 @@ static int handle_turn_command(turn_turnserver *server, ts_ur_super_session *ss,
         }
 
         if (!err_code) {
-          SOCKET_TYPE const cst = get_ioa_socket_type(ss->client_socket);
+          const SOCKET_TYPE cst = get_ioa_socket_type(ss->client_socket);
           turn_server_addrs_list_t *asl = server->alternate_servers_list;
 
           if (((cst == UDP_SOCKET) || (cst == DTLS_SOCKET)) && server->self_udp_balance && server->aux_servers_list &&
@@ -4119,7 +4119,7 @@ int shutdown_client_connection(turn_turnserver *server, ts_ur_super_session *ss,
     return -1;
   }
 
-  SOCKET_TYPE const socket_type = get_ioa_socket_type(ss->client_socket);
+  const SOCKET_TYPE socket_type = get_ioa_socket_type(ss->client_socket);
 
   turn_report_session_usage(ss, 1);
   dec_quota(ss);
@@ -4485,8 +4485,8 @@ static int read_client_connection(turn_turnserver *server, ts_ur_super_session *
 
   size_t blen = ioa_network_buffer_get_size(in_buffer->nbh);
   const size_t orig_blen = blen;
-  SOCKET_TYPE const st = get_ioa_socket_type(ss->client_socket);
-  SOCKET_APP_TYPE const sat = get_ioa_socket_app_type(ss->client_socket);
+  const SOCKET_TYPE st = get_ioa_socket_type(ss->client_socket);
+  const SOCKET_APP_TYPE sat = get_ioa_socket_app_type(ss->client_socket);
   const int is_padding_mandatory = is_stream_socket(st);
 
   if (sat == HTTP_CLIENT_SOCKET) {
@@ -4588,7 +4588,7 @@ static int read_client_connection(turn_turnserver *server, ts_ur_super_session *
       return 0;
     }
   } else {
-    SOCKET_TYPE const st = get_ioa_socket_type(ss->client_socket);
+    const SOCKET_TYPE st = get_ioa_socket_type(ss->client_socket);
     if (is_stream_socket(st)) {
       if (is_http((char *)ioa_network_buffer_data(in_buffer->nbh), ioa_network_buffer_get_size(in_buffer->nbh))) {
 
@@ -4821,13 +4821,8 @@ static void peer_input_handler(ioa_socket_handle s, int event_type, ioa_net_data
 
     ioa_network_buffer_header_init(nbh);
 
-<<<<<<< HEAD
     const SOCKET_TYPE st = get_ioa_socket_type(ss->client_socket);
     const int do_padding = is_stream_socket(st);
-=======
-        SOCKET_TYPE const st = get_ioa_socket_type(ss->client_socket);
-        const int do_padding = is_stream_socket(st);
->>>>>>> ed5004e (Adjust clang-format to enforce const-west)
 
     stun_init_channel_message_str(chnum, ioa_network_buffer_data(nbh), &len, len, do_padding);
     ioa_network_buffer_set_size(nbh, len);
@@ -4846,7 +4841,6 @@ static void peer_input_handler(ioa_socket_handle s, int event_type, ioa_net_data
     stun_attr_add_addr_str(ioa_network_buffer_data(nbh), &len, STUN_ATTRIBUTE_XOR_PEER_ADDRESS, &(in_buffer->src_addr));
     ioa_network_buffer_set_size(nbh, len);
 
-<<<<<<< HEAD
     if (!(*server->no_software_attribute)) {
       const uint8_t *field = (const uint8_t *)get_version(server);
       const size_t fsz = strlen(get_version(server));
@@ -4854,15 +4848,6 @@ static void peer_input_handler(ioa_socket_handle s, int event_type, ioa_net_data
       stun_attr_add_str(ioa_network_buffer_data(nbh), &len, STUN_ATTRIBUTE_SOFTWARE, field, fsz);
       ioa_network_buffer_set_size(nbh, len);
     }
-=======
-        if (!(*server->no_software_attribute)) {
-          const uint8_t *field = (const uint8_t *)get_version(server);
-          const size_t fsz = strlen(get_version(server));
-          size_t len = ioa_network_buffer_get_size(nbh);
-          stun_attr_add_str(ioa_network_buffer_data(nbh), &len, STUN_ATTRIBUTE_SOFTWARE, field, fsz);
-          ioa_network_buffer_set_size(nbh, len);
-        }
->>>>>>> ed5004e (Adjust clang-format to enforce const-west)
 
     if ((server->fingerprint) || ss->enforce_fingerprints) {
       size_t len = ioa_network_buffer_get_size(nbh);
