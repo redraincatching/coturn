@@ -2439,7 +2439,7 @@ static int socket_input_worker(ioa_socket_handle s) {
   if (s->st == TENTATIVE_TCP_SOCKET) {
     EVENT_DEL(s->read_event);
 #if TLS_SUPPORTED
-    TURN_TLS_TYPE const tls_type = check_tentative_tls(s->fd);
+    const TURN_TLS_TYPE tls_type = check_tentative_tls(s->fd);
     if (tls_type) {
       s->st = TLS_SOCKET;
       if (s->ssl) {
@@ -2478,7 +2478,7 @@ static int socket_input_worker(ioa_socket_handle s) {
   } else if (s->st == TENTATIVE_SCTP_SOCKET) {
     EVENT_DEL(s->read_event);
 #if TLS_SUPPORTED
-    TURN_TLS_TYPE const tls_type = check_tentative_tls(s->fd);
+    const TURN_TLS_TYPE tls_type = check_tentative_tls(s->fd);
     if (tls_type) {
       s->st = TLS_SCTP_SOCKET;
       if (s->ssl) {

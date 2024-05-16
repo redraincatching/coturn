@@ -3352,7 +3352,7 @@ static void handle_https(ioa_socket_handle s, ioa_network_buffer_handle nbh) {
     } else {
       TURN_LOG_FUNC(TURN_LOG_LEVEL_INFO, "%s: HTTPS request, path %s\n", __FUNCTION__, hr->path);
 
-      AS_FORM const form = get_form(hr->path);
+      const AS_FORM form = get_form(hr->path);
 
       switch (form) {
       case AS_FORM_PC: {
